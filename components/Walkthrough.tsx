@@ -32,7 +32,6 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
   const [selectedRank, setSelectedRank] = useState<StaffRank | null>(null);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  // Updated to use monochrome styling
   const ranks: { id: StaffRank; icon: LucideIcon; description: string }[] = [
     { id: 'Helper', icon: Star, description: 'The first line of defense. Helping players and keeping chat clean.' },
     { id: 'Junior Moderator', icon: Zap, description: 'Taking on more responsibility with advanced moderation tools.' },
@@ -45,7 +44,6 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
     setSlideIndex(0);
   };
 
-  // Generate slides based on rank
   const getSlides = (): Slide[] => {
     if (!selectedRank) return [];
 
@@ -70,7 +68,6 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
         icon: guidelinesSection?.icon
     };
 
-    // Role specific
     const rolesSection = GUIDE_DATA.find(s => s.id === 'roles');
     const myRole = rolesSection?.subSections?.find(sub => sub.title === selectedRank || (selectedRank === 'Junior Moderator' && sub.title === 'Junior Moderator'));
     const roleSlide: Slide = {
@@ -86,7 +83,6 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
         icon: Shield
     };
 
-    // Commands specific
     const commandsSection = GUIDE_DATA.find(s => s.id === 'commands');
     const commandTitleMap: Record<string, string> = {
         'Helper': 'Helper Commands',
@@ -136,7 +132,6 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
       if (slideIndex > 0) setSlideIndex(prev => prev - 1);
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'ArrowRight' && step === 'presentation') nextSlide();

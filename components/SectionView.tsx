@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Command, ContentSection, Punishment } from '../types';
 import { Terminal, ShieldAlert } from 'lucide-react';
+import { Tooltip } from './Tooltip';
 
 interface SectionViewProps {
   section: ContentSection;
@@ -59,8 +60,10 @@ export const SectionView: React.FC<SectionViewProps> = ({ section }) => {
             {sub.list && (
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 {sub.list.map((item, i) => (
-                  <li key={i} className="flex items-start gap-4 bg-[#252525]/50 hover:bg-[#303030]/50 p-4 rounded-xl border border-white/5 transition-colors">
-                    <div className="mt-2 w-1.5 h-1.5 rounded-full bg-white/40 shrink-0" />
+                  <li key={i} className="flex items-start gap-4 bg-[#202020] hover:bg-[#252525] p-4 rounded-xl border border-white/5 transition-colors shadow-sm group">
+                    <Tooltip text="Staff Responsibility">
+                        <div className="mt-2 w-1.5 h-1.5 rounded-full bg-white/40 shrink-0 group-hover:bg-white group-hover:shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" />
+                    </Tooltip>
                     <span className="text-gray-300">{item}</span>
                   </li>
                 ))}
@@ -75,9 +78,11 @@ export const SectionView: React.FC<SectionViewProps> = ({ section }) => {
                     <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-100 transition-opacity text-white">
                         <Terminal size={18} />
                     </div>
-                    <code className="text-white font-mono text-sm block mb-3 bg-white/5 w-fit px-3 py-1 rounded-md border border-white/5">
-                        {cmd.name}
-                    </code>
+                    <Tooltip text={cmd.usage}>
+                        <code className="text-white font-mono text-sm block mb-3 bg-[#191919] w-fit px-3 py-1 rounded-md border border-white/5 cursor-help hover:border-white/20 transition-colors">
+                            {cmd.name}
+                        </code>
+                    </Tooltip>
                     <p className="text-gray-200 font-medium mb-2 text-lg">{cmd.description}</p>
                     <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
                         <span className="w-1 h-1 rounded-full bg-gray-600" />
@@ -90,9 +95,9 @@ export const SectionView: React.FC<SectionViewProps> = ({ section }) => {
 
             {/* Render Table (Punishments) */}
             {sub.table && (
-              <div className="overflow-hidden rounded-2xl border border-white/5 mt-6 bg-[#202020]/50">
+              <div className="overflow-hidden rounded-2xl border border-white/5 mt-6 bg-[#202020]">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-white/5 text-gray-400 uppercase text-xs tracking-wider">
+                  <thead className="bg-[#252525] text-gray-400 uppercase text-xs tracking-wider">
                     <tr>
                       <th className="px-6 py-5 font-semibold">Offense</th>
                       <th className="px-6 py-5 font-semibold">Description</th>
@@ -103,11 +108,15 @@ export const SectionView: React.FC<SectionViewProps> = ({ section }) => {
                   <tbody className="divide-y divide-white/5">
                     {sub.table.map((row: Punishment, i) => (
                       <tr key={i} className="group hover:bg-white/5 transition-colors">
-                        <td className="px-6 py-5 font-medium text-white group-hover:text-gray-200 transition-colors">{row.offense}</td>
+                        <td className="px-6 py-5 font-medium text-white group-hover:text-gray-200 transition-colors">
+                            <Tooltip text={row.description}>
+                                <span className="cursor-help border-b border-dotted border-gray-600">{row.offense}</span>
+                            </Tooltip>
+                        </td>
                         <td className="px-6 py-5 text-gray-400">{row.description}</td>
                         <td className="px-6 py-5 text-gray-500 hidden md:table-cell font-mono text-xs">{row.examples}</td>
                         <td className="px-6 py-5">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-white/5 text-gray-300 border border-white/10">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-[#191919] text-gray-300 border border-white/10">
                             {row.punishment}
                           </span>
                         </td>
@@ -129,7 +138,7 @@ export const SectionView: React.FC<SectionViewProps> = ({ section }) => {
             >
                <div className="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-white/5 blur-3xl rounded-full" />
                <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
-                   <div className="p-4 bg-white/5 rounded-full text-white shrink-0 border border-white/5">
+                   <div className="p-4 bg-[#191919] rounded-full text-white shrink-0 border border-white/5">
                        <ShieldAlert size={32} strokeWidth={1.5} />
                    </div>
                    <div>
