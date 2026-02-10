@@ -12,6 +12,7 @@ import {
   Star,
   LucideIcon
 } from 'lucide-react';
+import { Confetti } from './Confetti';
 
 interface WalkthroughProps {
   onClose: () => void;
@@ -148,18 +149,21 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-[#191919]/90 backdrop-blur-xl flex flex-col items-center justify-center p-6"
+        className="fixed inset-0 z-[100] bg-[#191919]/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 overflow-hidden"
     >
+        {/* Celebration Confetti */}
+        {step === 'presentation' && currentSlide?.isLast && <Confetti />}
+
         {/* Close Button */}
         <button 
             onClick={onClose}
-            className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
+            className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 text-gray-400 hover:text-white transition-colors z-50"
         >
             <X size={24} />
         </button>
 
         {step === 'rank-select' ? (
-            <div className="max-w-5xl w-full text-center space-y-12">
+            <div className="max-w-5xl w-full text-center space-y-12 relative z-10">
                 <motion.div
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -193,7 +197,7 @@ export const Walkthrough: React.FC<WalkthroughProps> = ({ onClose }) => {
                 </div>
             </div>
         ) : (
-            <div className="max-w-2xl w-full relative">
+            <div className="max-w-2xl w-full relative z-10">
                  {/* Progress Bar */}
                 <div className="absolute -top-12 left-0 w-full h-1 bg-white/5 rounded-full overflow-hidden">
                     <motion.div 
